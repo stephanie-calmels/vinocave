@@ -1,0 +1,27 @@
+{
+  "name": "vinocave",
+  "version": "1.0.0",
+  "description": "Appli de gestion d'une cave de vieillissement.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephanie-calmels/vinocave.git"
+  },
+  "author": "stephanie-calmels",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephanie-calmels/vinocave/issues"
+  },
+  "homepage": "https://github.com/stephanie-calmels/vinocave#readme",
+  "dependencies": {
+    "dotenv": "^11.0.0",
+    "express": "^4.17.2",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.13.0"
+  }
+}
