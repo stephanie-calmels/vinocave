@@ -1,0 +1,5 @@
+BOUTEILLE: id, nom, type, millésime, stock, commentaire, note, étagère
+
+POSSEDE, 11 BOUTEILLE, 0N APPELLATION
+
+APPELLATION: id, libellé
