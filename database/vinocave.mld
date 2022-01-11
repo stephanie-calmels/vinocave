@@ -1,0 +1,2 @@
+BOUTEILLE (id SERIAL, nom TEXT, type TEXT, millesime INT, stock INT, commentaire TEXT, note INT, etagere INT, #appellation(id) INT)
+APPELLATION (id SERIAL, libelle TEXT)
