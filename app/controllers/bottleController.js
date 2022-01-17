@@ -4,10 +4,12 @@ module.exports = {
   getOneBottle: async (request, response, next) => {
     try {
       const bottleId = request.params.id;
-      const bottle = await Bottle.findByPk(bottleId);
+      const bottle = await Bottle.findByPk(bottleId, {
+        include: 'appellation'
+      });
 
       if (bottle) {
-        response.json(bottle);
+        response.render('bottle', {bottle});
       } else {
         next();
       }
