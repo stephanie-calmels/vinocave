@@ -1,4 +1,5 @@
 const { Bottle, Appellation } = require('../models');
+const guard = require('../../ressources/guard.json');
 
 module.exports = {
   getOneBottle: async (request, response, next) => {
@@ -26,7 +27,7 @@ module.exports = {
       const appellations = await Appellation.findAll();
 
       if (appellations) {
-        response.render('newBottle', {appellations});
+        response.render('newBottle', {appellations, guard});
       } else {
         next();
       }
@@ -39,8 +40,19 @@ module.exports = {
   },
 
   newBottle: async (request, response, next) => {
+    const bottleInfo = {
+      label: request.body.label,
+      appellation_id: request.body.appellation_id,
+      color: request.body.color,
+      millesime: request.body.millesime,
+      comment: request.body.comment,
+      quantity: request.body.quantity,
+      guard: request.body.guard.length > 0 ? request.body.guard : null,
+      rack: request.body.rack.length > 0 ? request.body.rack : null,
+    }
+    console.log(bottleInfo);
     try {
-      const result = await Bottle.create(request.body);
+      const result = await Bottle.create(bottleInfo);
 
       if (result) {
         const newBottle = await Bottle.findByPk(result.id, {
