@@ -13,6 +13,7 @@ app.set('view engine', 'ejs');
 app.set('views', './app/views');
 
 // middlewares
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // router

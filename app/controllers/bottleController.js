@@ -26,7 +26,7 @@ module.exports = {
       const appellations = await Appellation.findAll();
 
       if (appellations) {
-        response.json(appellations);
+        response.render('newBottle', {appellations});
       } else {
         next();
       }
@@ -46,7 +46,7 @@ module.exports = {
         const newBottle = await Bottle.findByPk(result.id, {
           include: 'appellation'
         });
-        response.json(newBottle);
+        response.render('bottle', {bottle: newBottle});
       } else {
         next();
       }

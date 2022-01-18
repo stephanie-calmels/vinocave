@@ -1,0 +1,89 @@
+<%- include('./partials/header') %>
+
+    <form class="container m-4 mt-4" action="/nouvelle_bouteille" method="post">
+        <div class="field">
+            <label class="label" for="label">Nom</label>
+            <div class="control">
+              <input class="input" type="text" id="label" name="label" placeholder="Château Pétrus">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="appellation">Appellation</label>
+            <div class="control">
+                <div class="select">
+                    <select id="appellation" name="appellation_id">
+                        <% appellations.forEach(appellation => { %>
+                            <option value=<%= appellation.id %> >
+                                <%= appellation.label %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="color">Type</label>
+            <div class="control">
+                <div class="select">
+                    <select id="color" name="color">
+                        <option value="blanc">Blanc</option>
+                        <option value="rosé">Rosé</option>
+                        <option value="rouge">Rouge</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-grouped">
+            <div class="field mr-4">
+                <label class="label" for="millesime">Millésime</label>
+                <div class="control">
+                    <input class="input" type="number"  id="millesime" name="millesime" placeholder="2020" min="1975">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="guard">Viellissement</label>
+                <div class="control">
+                    <input class="input" type="number" id="guard" name="guard" placeholder="2" min="0" max="20">
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-grouped">
+            <div class="field mr-4">
+                <label class="label" for="quantity">Quantité</label>
+                <div class="control">
+                    <input class="input" type="number" id="quantity" name="quantity" placeholder="1" min="0" max="24">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="rack">Etagère</label>
+                <div class="control">
+                    <input class="input" type="number" id="rack" name="rack" placeholder="1" min="0" max="2">
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="comment">Commentaire</label>
+            <div class="control">
+                <textarea class="textarea" id="comment" name="comment" placeholder="Commentaire"></textarea>
+            </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-centered">
+            <div class="control">
+              <button class="button is-primary" type="submit">Ajouter</button>
+            </div>
+            <div class="control">
+              <a href="/" class="button is-light">Annuler</a>
+            </div>
+        </div>
+
+    </form>
+
+<%- include('./partials/footer') %>
