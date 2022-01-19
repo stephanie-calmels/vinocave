@@ -38,9 +38,17 @@
         </div>
 
         <footer class="card-footer">
-            <a href="#" class="card-footer-item has-text-dark" title="Sortir une bouteille">
-                <i class="fas fa-wine-glass-alt"></i>    
-            </a>
+
+            <% if (bottle.quantity > 0) { %>
+                <a href="/boire-bouteille/<%= bottle.id %>" class="card-footer-item has-text-dark" title="Sortir une bouteille">
+                    <i class="fas fa-wine-glass-alt"></i>    
+                </a>
+            <% } else { %>
+                <a href="#" class="card-footer-item has-text-dark is-hidden" title="Sortir une bouteille">
+                    <i class="fas fa-wine-glass-alt"></i>    
+                </a>
+            <% } %>
+
             <a href="/maj-bouteille/<%= bottle.id %>" class="card-footer-item has-text-dark" title="Modifier une bouteille">
                 <i class="fas fa-pencil-alt"></i>
             </a>

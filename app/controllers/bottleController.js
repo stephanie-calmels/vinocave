@@ -149,6 +149,31 @@ module.exports = {
         "error": error.message
       });
     }
+  },
+  
+  drinkBottle: async (request, response, next) => {
+    try {
+      const bottleId = request.params.id;
+      const currentBottle = await Bottle.findByPk(bottleId);
 
-  }
+      if (currentBottle && currentBottle.quantity > 0) {
+        const bottleInfo = {
+          quantity: currentBottle.quantity - 1,
+        }
+    
+        const result = await currentBottle.update(bottleInfo);
+        const bottle = await Bottle.findByPk(result.id, {
+          include: 'appellation'
+        });
+        response.render('bottle', {bottle, guard});
+      } else {
+        next();
+      }
+
+    } catch (error) {
+      response.status(500).json({
+        "error": error.message
+      });
+    }
+  },
 };

@@ -16,6 +16,8 @@ router.delete('/bouteille/:id', bottleController.deleteBottle);
 router.get('/maj-bouteille/:id', bottleController.modifyBottle);
 // traitement du formulaire
 router.post('/maj-bouteille/:id', bottleController.updateBottle);
+// sortir une bouteille du stock
+router.get('/boire-bouteille/:id', bottleController.drinkBottle);
 
 // affichage du formulaire d'ajout de bouteille
 router.get('/nouvelle_bouteille', bottleController.addBottle);
