@@ -22,7 +22,7 @@
                 <p class="title is-3 mb-5"><%= bottle.label %></p>
                 <p class="subtitle is-5 mb-2"><%= bottle.appellation.label %></p>
                 <p class= "is-italic is-size-6 mb-2"><%= bottle.millesime %></p>
-                <p class= "is-italic is-size-7">A garder : <%= bottle.guard %> ans</p>
+                <p class= "is-italic is-size-7"><%= guard[bottle.guard] %></p>
 
             </div>
 
@@ -36,6 +36,15 @@
             </div>
 
         </div>
+
+        <footer class="card-footer">
+            <a href="#" class="card-footer-item has-text-dark" title="Sortir une bouteille">
+                <i class="fas fa-wine-glass-alt"></i>    
+            </a>
+            <a href="/maj-bouteille/<%= bottle.id %>" class="card-footer-item has-text-dark" title="Modifier une bouteille">
+                <i class="fas fa-pencil-alt"></i>
+            </a>
+        </footer>
 
     </article>
 

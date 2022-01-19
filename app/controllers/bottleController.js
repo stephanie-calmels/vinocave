@@ -10,7 +10,7 @@ module.exports = {
       });
 
       if (bottle) {
-        response.render('bottle', {bottle});
+        response.render('bottle', {bottle, guard});
       } else {
         next();
       }
@@ -50,7 +50,6 @@ module.exports = {
       guard: request.body.guard.length > 0 ? request.body.guard : null,
       rack: request.body.rack.length > 0 ? request.body.rack : null,
     }
-    console.log(bottleInfo);
     try {
       const result = await Bottle.create(bottleInfo);
 
@@ -71,16 +70,27 @@ module.exports = {
   },
 
   updateBottle: async (request, response, next) => {
+    const bottleInfo = {
+      label: request.body.label,
+      appellation_id: request.body.appellation_id,
+      color: request.body.color,
+      millesime: request.body.millesime,
+      comment: request.body.comment,
+      quantity: request.body.quantity,
+      guard: request.body.guard.length > 0 ? request.body.guard : null,
+      rack: request.body.rack.length > 0 ? request.body.rack : null,
+    }
+
     try {
       const bottleId = request.params.id;
       const currentBottle = await Bottle.findByPk(bottleId);
 
       if (currentBottle) {
-        const result = await currentBottle.update(request.body);
-        const updatedBottle = await Bottle.findByPk(result.id, {
+        const result = await currentBottle.update(bottleInfo);
+        const bottle = await Bottle.findByPk(result.id, {
           include: 'appellation'
         });
-        response.json(updatedBottle);
+        response.render('bottle', {bottle, guard});
       } else {
         next();
       }
@@ -117,13 +127,15 @@ module.exports = {
   modifyBottle: async (request, response, next) => {
     try {
       const bottleId = request.params.id;
-      const bottle = await Bottle.findByPk(bottleId);
+      const bottle = await Bottle.findByPk(bottleId, {
+        include: 'appellation'
+      });
 
       if (bottle) {
         const appellations = await Appellation.findAll();
 
         if (appellations) {
-          response.json({appellations, bottle});
+          response.render('updateBottle', {appellations, bottle, guard});
         } else {
           next();
         }
