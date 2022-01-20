@@ -112,7 +112,7 @@ module.exports = {
       });
 
       if (deleted) {
-        response.json('Suppression effectuée');
+        response.redirect('/');
       } else {
         next();
       }

@@ -8,9 +8,8 @@ const appellationController = require('./controllers/appellationController');
 // page d'accueil
 router.get('/', mainController.home);
 
-// détail et suppression d'une bouteille
+// détail d'une bouteille
 router.get('/bouteille/:id', bottleController.getOneBottle);
-router.delete('/bouteille/:id', bottleController.deleteBottle);
 
 // affichage du formulaire de modification d'une bouteille
 router.get('/maj-bouteille/:id', bottleController.modifyBottle);
@@ -18,6 +17,8 @@ router.get('/maj-bouteille/:id', bottleController.modifyBottle);
 router.post('/maj-bouteille/:id', bottleController.updateBottle);
 // sortir une bouteille du stock
 router.get('/boire-bouteille/:id', bottleController.drinkBottle);
+// suppression d'une bouteille
+router.get('/suppr-bouteille/:id', bottleController.deleteBottle);
 
 // affichage du formulaire d'ajout de bouteille
 router.get('/nouvelle_bouteille', bottleController.addBottle);

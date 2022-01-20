@@ -100,4 +100,22 @@
 
     </form>
 
+    <button class="button is-danger js-modal-trigger is-flex m-auto" data-target="modal-delete">Supprimer</button>
+
+    <div class="modal" id="modal-delete">
+        <div class="modal-background m-10"></div>
+
+        <div class="modal-card m-6 has-text-centered">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Supprimer ?</p>
+              <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <p class="mb-4">Etes-vous sûr ?</p>
+                <a href="/suppr-bouteille/<%= bottle.id %>" class="button is-danger">Oui</a>
+
+            </section>
+          </div>
+    </div>
+
 <%- include('./partials/footer') %>
