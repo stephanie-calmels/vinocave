@@ -5,7 +5,7 @@ module.exports = {
     Bottle.findAll({
       include: 'appellation'
     }).then(bottles => {
-      response.json(bottles);
+      response.render('home', {bottles});
     }).catch(error => {
       console.log(error);
     });

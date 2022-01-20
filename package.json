@@ -19,6 +19,7 @@
   "homepage": "https://github.com/stephanie-calmels/vinocave#readme",
   "dependencies": {
     "dotenv": "^11.0.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.2",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",

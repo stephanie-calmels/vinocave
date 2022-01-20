@@ -26,11 +26,15 @@ Bottle.init({
   millesime: {
     type: DataTypes.INTEGER,
     validate: {
-      is: /^(\d{4})$/gm,
+      is: {
+        args: /^(\d{4})$/gm,
+        msg: 'Veuillez entrer une année'
+      }
     }
   },
   guard: {
     type: DataTypes.INTEGER,
+    allowNull: true,
     validate: {
       min: 0,
       max: 20,
@@ -44,23 +48,22 @@ Bottle.init({
       notNull: {
         msg: 'Veuillez indiquer une quantité'
       }
-
     }
-
   },
   comment: {
     type: DataTypes.STRING,
   },
   note: {
     type: DataTypes.INTEGER,
+    allowNull: true,
     validate: {
       min: 0,
       max: 5,
     }
-
   },
   rack: {
     type: DataTypes.INTEGER,
+    allowNull: true,
     validate: {
       min: 0,
       max: 2,
