@@ -1,6 +1,6 @@
 <%- include('./partials/header') %>
 
-    <h2 class="subtitle is-4 has-text-centered">Liste des bouteilles</h2>
+    <h2 class="subtitle is-4 has-text-centered mt-4"><%= title %></h2>
 
         <% bottles.forEach(bottle => { %>
             <a href="/bouteille/<%=bottle.id%>">
@@ -8,7 +8,7 @@
                     <div class="media mb-2">
                         <div class="media-left">
                             <figure class="image is-48x48">
-                                <img src="/img/<%= bottle.color %>.png" alt="Placeholder image">
+                                <img src="/img/<%= bottle.color %>.png" alt="<%= bottle.color %>">
 
                                 <% if (bottle.note) { %>
                                     <div class="is-size-7 has-text-centered mt-1">
