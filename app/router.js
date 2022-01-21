@@ -27,6 +27,9 @@ router.get('/nouvelle_bouteille', bottleController.addBottle);
 // traitement du formulaire
 router.post('/nouvelle_bouteille', bottleController.newBottle);
 
+//filtre par type
+router.get('/vins/:color', mainController.colorFilter);
+
 // liste des appellations
 router.get('/appellation', appellationController.getAppellations);
 
