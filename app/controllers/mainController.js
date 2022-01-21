@@ -9,7 +9,11 @@ module.exports = {
           [Op.gt]: 0,
         }
       },
-      include: 'appellation'
+      include: 'appellation',
+      order: [
+        ['guard', 'ASC'],
+        ['color', 'ASC']
+      ]
     }).then(bottles => {
       response.render('home', {bottles});
     }).catch(error => {
