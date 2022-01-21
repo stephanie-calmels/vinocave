@@ -6,15 +6,17 @@
                 <figure class="image is-48x48">
                     <img src="/img/<%= bottle.color %>.png" alt="Placeholder image">
 
-                    <div class="is-size-7 has-text-centered mt-1">
-                        <% for (let i=1; i<=5; i++) {
-                            if (bottle.note >= i) {%>
-                            &#9733;
-                        <% } else { %>
-                            &#9734;
-                        <% } %>
-                        <% } %>
-                    </div>
+                    <% if (bottle.note) { %>
+                        <div class="is-size-7 has-text-centered mt-1">
+                            <% for (let i=1; i<=5; i++) {
+                                if (bottle.note >= i) {%>
+                                &#9733;
+                            <% } else { %>
+                                &#9734;
+                            <% } %>
+                            <% } %>
+                        </div>
+                    <% } %>
                 </figure>
             </div>
 
@@ -52,6 +54,45 @@
             <a href="/maj-bouteille/<%= bottle.id %>" class="card-footer-item has-text-dark" title="Modifier une bouteille">
                 <i class="fas fa-pencil-alt"></i>
             </a>
+
+            <a class="card-footer-item has-text-dark js-modal-trigger" title="Attribuer une note" data-target="modal-note">
+                <i class="fas fa-star-half-alt"></i>
+            </a> 
+
+            <div class="modal" id="modal-note">
+                <div class="modal-background m-10"></div>
+
+                <div class="modal-card m-6 has-text-centered">
+                    <header class="modal-card-head">
+                    <p class="modal-card-title">Attribuer une note</p>
+                    <button class="delete" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form action="/note-bouteille/<%= bottle.id %>" method="post">
+                            <div class="field">
+                                <label class="label" for="note">Note</label>
+                                <div class="select">
+                                    <select id="note" name="note">
+                                        <option value=<%= bottle.note %> selected hidden><%= bottle.note %></option>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="control">
+                                <button class="button is-primary" type="submit">Valider</button>
+                            </div>
+
+                        </form>
+                    </section>
+                </div>
+            </div>
+
         </footer>
 
     </article>

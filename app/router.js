@@ -19,6 +19,8 @@ router.post('/maj-bouteille/:id', bottleController.updateBottle);
 router.get('/boire-bouteille/:id', bottleController.drinkBottle);
 // suppression d'une bouteille
 router.get('/suppr-bouteille/:id', bottleController.deleteBottle);
+// attribuer une note à une bouteille
+router.post('/note-bouteille/:id', bottleController.noteBottle);
 
 // affichage du formulaire d'ajout de bouteille
 router.get('/nouvelle_bouteille', bottleController.addBottle);
