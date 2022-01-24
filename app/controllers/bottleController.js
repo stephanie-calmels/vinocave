@@ -24,7 +24,11 @@ module.exports = {
 
   addBottle: async (request, response, next) => {
     try {
-      const appellations = await Appellation.findAll();
+      const appellations = await Appellation.findAll({
+        order: [
+          ['label', 'ASC'],
+        ]
+      });
 
       if (appellations) {
         response.render('newBottle', {appellations, guard});
@@ -132,7 +136,11 @@ module.exports = {
       });
 
       if (bottle) {
-        const appellations = await Appellation.findAll();
+        const appellations = await Appellation.findAll({
+          order: [
+            ['label', 'ASC'],
+          ]
+        });
 
         if (appellations) {
           response.render('updateBottle', {appellations, bottle, guard});
