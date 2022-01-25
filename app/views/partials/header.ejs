@@ -21,13 +21,18 @@
     <title>Vinocave</title>
 </head>
 <body>
-    <header class="navbar has-background-light">
-        <a href="/">
-            <h1 class="title is-2 has-text-centered py-3">Vinocave</h1>
-        </a>
-
-        <nav class="navbar" role="navigation" aria-label="main navigation">          
-            <div class="navbar-menu is-flex is-justify-content-space-around">
+    <header>
+        <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">          
+            <a href="/" class="navbar-brand is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
+                <figure class="image is-48x48 mr-10 title_icon">
+                    <img src="/img/grapes.png">
+                </figure>
+                
+                <h1 class="title is-2 has-text-centered py-3">Vinocave</h1>
+                
+            </a>
+            
+            <div class="navbar-menu is-flex is-justify-content-space-around  py-0">
                 <a href="/vins/blanc" class="navbar-item">
                     <img src="/img/blanc.png" alt="Vins blancs" title="Vins blancs">
                 </a>
@@ -40,7 +45,7 @@
                     <img src="/img/rouge.png" alt="Vins rouges" title="Vins rouges">
                 </a>          
             </div>
-          </nav>
+        </nav>       
     </header>
 
     <main class="container">

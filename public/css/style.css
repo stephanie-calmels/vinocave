@@ -6,3 +6,8 @@ input:valid:required, select:valid:required {
     border: 1px solid #00d1b2;
 }
 
+.title_icon {
+    position: absolute;
+    top: inherit;
+    left: 1rem;
+}
