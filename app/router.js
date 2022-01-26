@@ -4,6 +4,7 @@ const router = express.Router();
 const mainController = require('./controllers/mainController');
 const bottleController = require('./controllers/bottleController');
 const appellationController = require('./controllers/appellationController');
+const { request } = require('express');
 
 // page d'accueil
 router.get('/', mainController.home);
@@ -27,13 +28,12 @@ router.get('/nouvelle_bouteille', bottleController.addBottle);
 // traitement du formulaire
 router.post('/nouvelle_bouteille', bottleController.newBottle);
 
-//filtre par type
+// filtre par type
 router.get('/vins/:color', mainController.colorFilter);
 
-// liste des appellations
-router.get('/appellation', appellationController.getAppellations);
-
-// détail d'une appellation 
-router.get('/appellation/:id', appellationController.getOneAppellation);
+// affichage du formulaire de recherche
+router.get('/recherche', appellationController.getAppellations);
+// traitement du formulaire
+router.post('/recherche', bottleController.searchBottle);
 
 module.exports = router;

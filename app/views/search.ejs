@@ -1,0 +1,108 @@
+<%- include('./partials/header') %>
+
+    <h2 class="subtitle is-4 has-text-centered mt-4">Faire une recherche</h2>
+
+    <form class="container m-4 mt-4" action="/recherche" method="post">
+        <div class="field">
+            <label class="label" for="label">Par nom</label>
+            <div class="control">
+              <input class="input" type="text" id="label" name="label" placeholder="Château Pétrus">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="appellation">Par appellation</label>
+            <div class="control">
+                <div class="select">
+                    <select id="appellation" name="appellation_id">
+                        <option selected disabled hidden></option>
+                        <% appellations.forEach(appellation => { %>
+                            <option value=<%= appellation.id %> >
+                                <%= appellation.label %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="color">Par type</label>
+            <div class="control">
+                <div class="select">
+                    <select id="color" name="color">
+                        <option selected disabled hidden></option>
+                        <option value="blanc">Blanc</option>
+                        <option value="rose">Rosé</option>
+                        <option value="rouge">Rouge</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-grouped">
+            <div class="field mr-4">
+                <label class="label" for="millesime">Par millésime</label>
+                <div class="control">
+                    <input class="input" type="number"  id="millesime" name="millesime">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="guard">Par viellissement</label>
+                <div class="select">
+                    <select id="guard" name="guard">
+                        <option selected disabled hidden></option>
+                        <% for (const property in guard) {%>
+                            <option value=<%= property %> >
+                                <%= guard[property] %>
+                            </option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-grouped">
+
+            <div class="field mr-6">
+                <label class="label" for="note">Par note</label>
+                <div class="select">
+                    <select id="note" name="note">
+                        <option selected disabled hidden></option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="field">
+                <label class="label" for="rack">Par étagère</label>
+                <div class="select">
+                    <select id="rack" name="rack">
+                        <option selected disabled hidden></option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-centered">
+            <div class="control">
+              <button class="button is-primary" type="submit">Rechercher</button>
+            </div>
+            <div class="control">
+              <a href="/" class="button is-light">Annuler</a>
+            </div>
+        </div>
+
+    </form>
+
+<%- include('./partials/footer') %>
