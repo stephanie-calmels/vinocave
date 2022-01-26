@@ -5,7 +5,11 @@ module.exports = {
   getAppellations: async (request, response, next) => {
     try {
       const appellations = await Appellation.findAll({
-        include: 'bottles'
+        include: 'bottles',
+        order: [
+          ['label', 'ASC'],
+        ]
+  
       });
   
       if (appellations) {

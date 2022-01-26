@@ -13,9 +13,9 @@
             <div class="control">
                 <div class="select">
                     <select id="appellation" name="appellation_id" required>
-                        <option value=<%= bottle.appellation_id %> selected hidden><%= bottle.appellation.label %></option>
+                        <option value="<%= bottle.appellation_id %>" selected hidden><%= bottle.appellation.label %></option>
                         <% appellations.forEach(appellation => { %>
-                            <option value=<%= appellation.id %> >
+                            <option value="<%= appellation.id %>" >
                                 <%= appellation.label %>
                             </option>
                         <% }) %>
@@ -42,7 +42,7 @@
             <div class="field mr-4">
                 <label class="label" for="millesime">Millésime</label>
                 <div class="control">
-                    <input class="input" type="number"  id="millesime" name="millesime" placeholder="2020" required min="1975" value=<%= bottle.millesime %>>
+                    <input class="input" type="number"  id="millesime" name="millesime" placeholder="2020" required min="1975" value="<%= bottle.millesime %>">
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                 <label class="label" for="guard">Viellissement</label>
                 <div class="select">
                     <select id="guard" name="guard">
-                        <option value=<%= bottle.guard %> selected hidden><%= guard[bottle.guard] %></option>
+                        <option value="<%= bottle.guard %>" selected hidden><%= guard[bottle.guard] %></option>
                         <% for (const property in guard) {%>
                             <option value=<%= property %> >
                                 <%= guard[property] %>
@@ -65,7 +65,7 @@
             <div class="field mr-4">
                 <label class="label" for="quantity">Quantité</label>
                 <div class="control">
-                    <input class="input" type="number" id="quantity" name="quantity" placeholder="1" min="0" required value=<%= bottle.quantity %>>
+                    <input class="input" type="number" id="quantity" name="quantity" placeholder="1" min="0" required value="<%= bottle.quantity %>">
                 </div>
             </div>
 
@@ -73,7 +73,7 @@
                 <label class="label" for="rack">Etagère</label>
                 <div class="select">
                     <select id="rack" name="rack">
-                        <option value=<%= bottle.rack %> selected hidden><%= bottle.rack %></option>
+                        <option value="<%= bottle.rack %>" selected hidden><%= bottle.rack %></option>
                         <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>

@@ -1,5 +1,6 @@
 const { Bottle, Appellation } = require('../models');
 const guard = require('../../ressources/guard.json');
+const { Op } = require('sequelize');
 
 module.exports = {
   getOneBottle: async (request, response, next) => {
@@ -81,8 +82,8 @@ module.exports = {
       millesime: request.body.millesime,
       comment: request.body.comment,
       quantity: request.body.quantity,
-      guard: request.body.guard.length > 0 ? request.body.guard : null,
-      rack: request.body.rack.length > 0 ? request.body.rack : null,
+      guard: request.body.guard ? request.body.guard : null,
+      rack: request.body.rack ? request.body.rack : null,
     }
 
     try {
@@ -211,4 +212,66 @@ module.exports = {
     }
   },
 
+  searchBottle: async (request, response, next) => {
+    // objet construit à partir des champs du formulaire qui ont été remplis
+    const bottleInfo = {
+      label: request.body.label,
+      appellation_id: request.body.appellation_id ? request.body.appellation_id : null,
+      color: request.body.color ? request.body.color : null,
+      millesime: request.body.millesime.lenght > 0 ? request.body.millesime : null,
+      note: request.body.note ? request.body.note : null,
+      quantity: request.body.quantity ? request.body.quantity : null,
+      guard: request.body.guard ? request.body.guard : null,
+      rack: request.body.rack ? request.body.rack : null,
+    }
+
+    // objet de config de base à passer en paramètre de la requête
+    let config = {
+      where: {
+        label: {[Op.like]: `%${bottleInfo.label}%`}
+      },
+      include: 'appellation',
+      order: [
+        ['guard', 'ASC'],
+        ['color', 'ASC'],
+        ['appellation_id', 'ASC'],
+        ['quantity', 'DESC'],
+      ]
+    };
+
+    // pour chaque champ de formulaire rempli, on ajoute la propriété à l'objet de config pour affiner la recherche
+    if (bottleInfo.appellation_id) {
+      config.where.appellation_id = bottleInfo.appellation_id;
+    }  
+    if (bottleInfo.color) {
+      config.where.color = {[Op.like]: `%${bottleInfo.color}%`}
+    }
+    if (bottleInfo.millesime) {
+      config.where.millesime = bottleInfo.millesime;
+    }  
+    if (bottleInfo.note) {
+      config.where.note = bottleInfo.note;
+    }  
+    if (bottleInfo.guard) {
+      config.where.guard = bottleInfo.guard;
+    }  
+    if (bottleInfo.rack) {
+      config.where.rack = bottleInfo.rack;
+    }  
+
+    try {
+      const results = await Bottle.findAll(config);
+
+      if (results) {
+        response.render('home', {bottles: results, title: "Résultats"});
+      } else {
+        next();
+      }
+  
+    } catch (error) {
+      response.status(500).json({
+        "error": error.message
+      });
+    }
+  },
 };

@@ -33,7 +33,7 @@ router.get('/vins/:color', mainController.colorFilter);
 
 // affichage du formulaire de recherche
 router.get('/recherche', appellationController.getAppellations);
-router.post('/recherche', (request) => {
-  console.log(request.body);
-});
+// traitement du formulaire
+router.post('/recherche', bottleController.searchBottle);
+
 module.exports = router;
