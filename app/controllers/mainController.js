@@ -56,5 +56,9 @@ module.exports = {
     }).catch(error => {
       console.log(error);
     });
+  },
+
+  notFound: (request, response) => {
+    response.status(404).render('404');
   }
 };
