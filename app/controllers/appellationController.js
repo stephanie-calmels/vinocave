@@ -1,4 +1,5 @@
 const { Appellation } = require('../models');
+const guard = require('../../ressources/guard.json');
 
 module.exports = {
   getAppellations: async (request, response, next) => {
@@ -8,7 +9,7 @@ module.exports = {
       });
   
       if (appellations) {
-        response.json(appellations);
+        response.render('search', {appellations, guard});
       } else {
         next();
       }
