@@ -59,6 +59,6 @@ module.exports = {
   },
 
   notFound: (request, response) => {
-    response.status(404).render('404');
+    response.status(404).render('404', {message: 'Cette page n\'existe pas.'});
   }
 };

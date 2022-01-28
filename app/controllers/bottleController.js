@@ -13,7 +13,7 @@ module.exports = {
       if (bottle) {
         response.render('bottle', {bottle, guard});
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
@@ -97,7 +97,7 @@ module.exports = {
         });
         response.render('bottle', {bottle, guard});
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
@@ -150,7 +150,7 @@ module.exports = {
         }
 
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
@@ -175,8 +175,10 @@ module.exports = {
           include: 'appellation'
         });
         response.render('bottle', {bottle, guard});
+      } else if (currentBottle && currentBottle.quantity === 0) {
+        response.status(404).render('404', {message: 'Cette bouteille n\'est plus en stock.'});
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
@@ -202,7 +204,7 @@ module.exports = {
         });
         response.render('bottle', {bottle, guard});
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
