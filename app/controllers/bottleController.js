@@ -88,14 +88,13 @@ module.exports = {
 
     try {
       const bottleId = request.params.id;
-      const currentBottle = await Bottle.findByPk(bottleId);
+      const currentBottle = await Bottle.findByPk(bottleId, {
+        include: 'appellation'
+      });
 
       if (currentBottle) {
-        const result = await currentBottle.update(bottleInfo);
-        const bottle = await Bottle.findByPk(result.id, {
-          include: 'appellation'
-        });
-        response.render('bottle', {bottle, guard});
+        await currentBottle.update(bottleInfo);
+        response.render('bottle', {bottle: currentBottle, guard});
       } else {
         response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
@@ -163,20 +162,20 @@ module.exports = {
   drinkBottle: async (request, response, next) => {
     try {
       const bottleId = request.params.id;
-      const currentBottle = await Bottle.findByPk(bottleId);
+      const currentBottle = await Bottle.findByPk(bottleId, {
+        include: 'appellation'
+      });
 
       if (currentBottle && currentBottle.quantity > 0) {
         const bottleInfo = {
           quantity: currentBottle.quantity - 1,
         }
-    
-        const result = await currentBottle.update(bottleInfo);
-        const bottle = await Bottle.findByPk(result.id, {
-          include: 'appellation'
-        });
-        response.render('bottle', {bottle, guard});
+        await currentBottle.update(bottleInfo);
+        response.render('bottle', {bottle: currentBottle, guard});
+
       } else if (currentBottle && currentBottle.quantity === 0) {
         response.status(404).render('404', {message: 'Cette bouteille n\'est plus en stock.'});
+
       } else {
         response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
@@ -191,18 +190,18 @@ module.exports = {
   noteBottle: async (request, response, next) => {
     try {
       const bottleId = request.params.id;
-      const currentBottle = await Bottle.findByPk(bottleId);
+      const currentBottle = await Bottle.findByPk(bottleId, {
+          include: 'appellation'
+        });
 
       if (currentBottle) {
         const bottleInfo = {
           note: request.body.note,
         }
     
-        const result = await currentBottle.update(bottleInfo);
-        const bottle = await Bottle.findByPk(result.id, {
-          include: 'appellation'
-        });
-        response.render('bottle', {bottle, guard});
+        await currentBottle.update(bottleInfo);
+        response.render('bottle', {bottle: currentBottle, guard});
+        
       } else {
         response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
