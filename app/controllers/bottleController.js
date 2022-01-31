@@ -1,6 +1,7 @@
 const { Bottle, Appellation } = require('../models');
 const guard = require('../../ressources/guard.json');
 const { Op } = require('sequelize');
+const logger = require('../../logger');
 
 module.exports = {
   getOneBottle: async (request, response, next) => {
@@ -17,9 +18,8 @@ module.exports = {
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -31,16 +31,11 @@ module.exports = {
         ]
       });
 
-      if (appellations) {
-        response.render('newBottle', {appellations, guard});
-      } else {
-        next();
-      }
+      response.render('newBottle', {appellations, guard});
       
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -68,9 +63,8 @@ module.exports = {
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -100,9 +94,8 @@ module.exports = {
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -122,9 +115,8 @@ module.exports = {
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -153,9 +145,8 @@ module.exports = {
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
   
@@ -181,9 +172,8 @@ module.exports = {
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -207,9 +197,8 @@ module.exports = {
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -263,16 +252,15 @@ module.exports = {
     try {
       const results = await Bottle.findAll(config);
 
-      if (results) {
+      if (results.length > 0) {
         response.render('home', {bottles: results, title: "Résultats"});
       } else {
-        next();
+        response.render('home', {bottles: [], title: "Aucun résultat"});
       }
   
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 };

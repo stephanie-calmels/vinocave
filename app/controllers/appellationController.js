@@ -1,5 +1,6 @@
 const { Appellation } = require('../models');
 const guard = require('../../ressources/guard.json');
+const logger = require('../../logger');
 
 module.exports = {
   getAppellations: async (request, response, next) => {
@@ -12,16 +13,11 @@ module.exports = {
   
       });
   
-      if (appellations) {
-        response.render('search', {appellations, guard});
-      } else {
-        next();
-      }
+      response.render('search', {appellations, guard});
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   }
 }
