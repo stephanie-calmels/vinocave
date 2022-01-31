@@ -1,5 +1,6 @@
 const { Bottle } = require('../models');
 const { Op } = require('sequelize');
+const logger = require('../../logger');
 
 module.exports = {
   home: (request, response) => {
@@ -21,7 +22,8 @@ module.exports = {
         bottles, 
         title: "Toutes les bouteilles"});
     }).catch(error => {
-      console.log(error);
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     });
   },
 
@@ -54,7 +56,12 @@ module.exports = {
         title: `Tous les vins ${type}`
       });
     }).catch(error => {
-      console.log(error);
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     });
+  },
+
+  notFound: (request, response) => {
+    response.status(404).render('404', {message: 'Cette page n\'existe pas.'});
   }
 };

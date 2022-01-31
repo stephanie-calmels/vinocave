@@ -1,6 +1,6 @@
-const { Bottle, Appellation } = require('../models');
-const guard = require('../../ressources/guard.json');
+const { Bottle } = require('../models');
 const { Op } = require('sequelize');
+const logger = require('../../logger');
 
 module.exports = {
   getOneBottle: async (request, response, next) => {
@@ -11,50 +11,33 @@ module.exports = {
       });
 
       if (bottle) {
-        response.render('bottle', {bottle, guard});
+        response.render('bottle', {bottle});
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
   addBottle: async (request, response, next) => {
-    try {
-      const appellations = await Appellation.findAll({
-        order: [
-          ['label', 'ASC'],
-        ]
-      });
-
-      if (appellations) {
-        response.render('newBottle', {appellations, guard});
-      } else {
-        next();
-      }
-      
-    } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
-    }
+      response.render('newBottle');
   },
 
   newBottle: async (request, response, next) => {
     const bottleInfo = {
-      label: request.body.label,
-      appellation_id: request.body.appellation_id,
+      label: request.body.label ? request.body.label : null,
+      appellation_id: request.body.appellation_id ? request.body.appellation_id : null,
       color: request.body.color,
       millesime: request.body.millesime,
       comment: request.body.comment,
-      quantity: request.body.quantity,
+      quantity: request.body.quantity ? request.body.quantity : null,
       guard: request.body.guard ? request.body.guard : null,
       rack: request.body.rack ? request.body.rack : null,
     }
+
     try {
       const result = await Bottle.create(bottleInfo);
 
@@ -62,48 +45,69 @@ module.exports = {
         const newBottle = await Bottle.findByPk(result.id, {
           include: 'appellation'
         });
-        response.render('bottle', {bottle: newBottle, guard});
+        response.render('bottle', {bottle: newBottle});
       } else {
         next();
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      // Traitement des erreurs de validation de sequelize
+      if (error.name === 'SequelizeValidationError') {
+        let errors = [];
+        error.errors.forEach(element => {
+          errors.push({
+            path: element.path, 
+            message: element.message
+          });
+        })
+        response.render('newBottle', {errors, fields: request.body});
+      } else {
+        logger.error(new Error(error))
+        response.render('error', {message: 'Une erreur est survenue.'})
+      }
     }
   },
 
   updateBottle: async (request, response, next) => {
     const bottleInfo = {
-      label: request.body.label,
-      appellation_id: request.body.appellation_id,
+      label: request.body.label ? request.body.label : null,
+      appellation_id: request.body.appellation_id ? request.body.appellation_id : null,
       color: request.body.color,
       millesime: request.body.millesime,
       comment: request.body.comment,
-      quantity: request.body.quantity,
+      quantity: request.body.quantity ? request.body.quantity : null,
       guard: request.body.guard ? request.body.guard : null,
       rack: request.body.rack ? request.body.rack : null,
     }
 
     try {
       const bottleId = request.params.id;
-      const currentBottle = await Bottle.findByPk(bottleId);
+      const currentBottle = await Bottle.findByPk(bottleId, {
+        include: 'appellation'
+      });
 
       if (currentBottle) {
-        const result = await currentBottle.update(bottleInfo);
-        const bottle = await Bottle.findByPk(result.id, {
-          include: 'appellation'
-        });
-        response.render('bottle', {bottle, guard});
+        await currentBottle.update(bottleInfo);
+        response.render('bottle', {bottle: currentBottle});
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      // Traitement des erreurs de validation de sequelize
+      if (error.name === 'SequelizeValidationError') {
+        let errors = [];
+        error.errors.forEach(element => {
+          errors.push({
+            path: element.path, 
+            message: element.message
+          });
+        })
+        response.render('newBottle', {errors, fields: request.body});
+      } else {
+        logger.error(new Error(error))
+        response.render('error', {message: 'Une erreur est survenue.'})
+      }
     }
   },
 
@@ -123,9 +127,8 @@ module.exports = {
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -137,78 +140,66 @@ module.exports = {
       });
 
       if (bottle) {
-        const appellations = await Appellation.findAll({
-          order: [
-            ['label', 'ASC'],
-          ]
-        });
-
-        if (appellations) {
-          response.render('updateBottle', {appellations, bottle, guard});
-        } else {
-          next();
-        }
-
+        response.render('updateBottle', {bottle});
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
   
   drinkBottle: async (request, response, next) => {
     try {
       const bottleId = request.params.id;
-      const currentBottle = await Bottle.findByPk(bottleId);
+      const currentBottle = await Bottle.findByPk(bottleId, {
+        include: 'appellation'
+      });
 
       if (currentBottle && currentBottle.quantity > 0) {
         const bottleInfo = {
           quantity: currentBottle.quantity - 1,
         }
-    
-        const result = await currentBottle.update(bottleInfo);
-        const bottle = await Bottle.findByPk(result.id, {
-          include: 'appellation'
-        });
-        response.render('bottle', {bottle, guard});
+        await currentBottle.update(bottleInfo);
+        response.render('bottle', {bottle: currentBottle});
+
+      } else if (currentBottle && currentBottle.quantity === 0) {
+        response.status(404).render('404', {message: 'Cette bouteille n\'est plus en stock.'});
+
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
   noteBottle: async (request, response, next) => {
     try {
       const bottleId = request.params.id;
-      const currentBottle = await Bottle.findByPk(bottleId);
+      const currentBottle = await Bottle.findByPk(bottleId, {
+          include: 'appellation'
+        });
 
       if (currentBottle) {
         const bottleInfo = {
           note: request.body.note,
         }
     
-        const result = await currentBottle.update(bottleInfo);
-        const bottle = await Bottle.findByPk(result.id, {
-          include: 'appellation'
-        });
-        response.render('bottle', {bottle, guard});
+        await currentBottle.update(bottleInfo);
+        response.render('bottle', {bottle: currentBottle});
+        
       } else {
-        next();
+        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
       }
 
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 
@@ -262,16 +253,15 @@ module.exports = {
     try {
       const results = await Bottle.findAll(config);
 
-      if (results) {
+      if (results.length > 0) {
         response.render('home', {bottles: results, title: "Résultats"});
       } else {
-        next();
+        response.render('home', {bottles: [], title: "Aucun résultat"});
       }
   
     } catch (error) {
-      response.status(500).json({
-        "error": error.message
-      });
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
 };

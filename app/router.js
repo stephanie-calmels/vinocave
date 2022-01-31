@@ -4,7 +4,6 @@ const router = express.Router();
 const mainController = require('./controllers/mainController');
 const bottleController = require('./controllers/bottleController');
 const appellationController = require('./controllers/appellationController');
-const { request } = require('express');
 
 // page d'accueil
 router.get('/', mainController.home);
@@ -35,5 +34,8 @@ router.get('/vins/:color', mainController.colorFilter);
 router.get('/recherche', appellationController.getAppellations);
 // traitement du formulaire
 router.post('/recherche', bottleController.searchBottle);
+
+// 404
+router.use(mainController.notFound);
 
 module.exports = router;

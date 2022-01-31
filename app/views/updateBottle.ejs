@@ -6,6 +6,12 @@
             <div class="control">
               <input class="input" type="text" id="label" name="label" placeholder="Château Pétrus" required value="<%= bottle.label %>">
             </div>
+            <% locals.errors?.find(error => { %>
+                <% if (error.path === 'label') { %>
+                    <p class="help is-danger"><%= error.message %></p>
+                <% } %>
+            <% }) %>
+
         </div>
 
         <div class="field">
@@ -22,6 +28,12 @@
                     </select>
                 </div>
             </div>
+            <% locals.errors?.find(error => { %>
+                <% if (error.path === 'appellation_id') { %>
+                    <p class="help is-danger"><%= error.message %></p>
+                <% } %>
+            <% }) %>
+
         </div>
 
         <div class="field">
@@ -29,13 +41,20 @@
             <div class="control">
                 <div class="select">
                     <select id="color" name="color" required>
-                        <option value="<%= bottle.color %>" selected hidden><%= bottle.color[0].toUpperCase() +  bottle.color.slice(1) %></option>
-                        <option value="blanc">Blanc</option>
-                        <option value="rose">Rosé</option>
-                        <option value="rouge">Rouge</option>
+                        <option value="<%= bottle.color %>" selected><%= colors[bottle.color] %></option>
+                        <% for (const color in colors) { %>
+                            <option value="<%= color %>"><%= colors[color] %></option>
+                        <% } %>
+
                     </select>
                 </div>
             </div>
+            <% locals.errors?.find(error => { %>
+                <% if (error.path === 'color') { %>
+                    <p class="help is-danger"><%= error.message %></p>
+                <% } %>
+            <% }) %>
+
         </div>
 
         <div class="field is-grouped">
@@ -44,6 +63,12 @@
                 <div class="control">
                     <input class="input" type="number"  id="millesime" name="millesime" placeholder="2020" required min="1975" value="<%= bottle.millesime %>">
                 </div>
+                <% locals.errors?.find(error => { %>
+                    <% if (error.path === 'millesime') { %>
+                        <p class="help is-danger"><%= error.message %></p>
+                    <% } %>
+                <% }) %>
+
             </div>
 
             <div class="field">
@@ -67,6 +92,12 @@
                 <div class="control">
                     <input class="input" type="number" id="quantity" name="quantity" placeholder="1" min="0" required value="<%= bottle.quantity %>">
                 </div>
+                <% locals.errors?.find(error => { %>
+                    <% if (error.path === 'quantity') { %>
+                        <p class="help is-danger"><%= error.message %></p>
+                    <% } %>
+                <% }) %>
+
             </div>
 
             <div class="field">

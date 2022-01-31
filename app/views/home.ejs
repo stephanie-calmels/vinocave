@@ -2,6 +2,14 @@
 
     <h2 class="subtitle is-4 has-text-centered mt-4"><%= title %></h2>
 
+        <% if (bottles.length === 0) { %>
+            <article class="card m-4 p-2">
+                <div class="card-content has-text-centered">
+                    Aucune bouteille
+                </div>
+            </article>
+        <% } %>
+
         <% bottles.forEach(bottle => { %>
             <a href="/bouteille/<%=bottle.id%>">
                 <article class="card m-4 p-2">

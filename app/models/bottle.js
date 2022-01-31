@@ -10,7 +10,7 @@ Bottle.init({
     allowNull: false,
     validate: {
       notNull: {
-        msg: 'Veuillez entrer un nom'
+        msg: 'Veuillez entrer un nom.'
       }
     }
   },
@@ -19,7 +19,7 @@ Bottle.init({
     allowNull: false,
     validate: {
       notNull: {
-        msg: 'Veuillez sélectionner un type'
+        msg: 'Veuillez sélectionner un type.'
       }
     }
   },
@@ -28,7 +28,7 @@ Bottle.init({
     validate: {
       is: {
         args: /^(\d{4})$/gm,
-        msg: 'Veuillez entrer une année'
+        msg: 'Veuillez entrer une année valide.'
       }
     }
   },
@@ -46,7 +46,7 @@ Bottle.init({
     validate: {
       min: 0,
       notNull: {
-        msg: 'Veuillez indiquer une quantité'
+        msg: 'Veuillez indiquer une quantité.'
       }
     }
   },
@@ -69,6 +69,19 @@ Bottle.init({
       max: 2,
     }
   },
+  appellation_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Appellation',
+      key: 'id'
+    },
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: 'Veuillez sélectionner une appellation.'
+      }
+    }
+  }
 }, 
 {
   sequelize,
