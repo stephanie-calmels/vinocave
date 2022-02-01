@@ -12,7 +12,7 @@
 
         <% bottles.forEach(bottle => { %>
             <a href="/bouteille/<%=bottle.id%>">
-                <article class="card m-4 p-2">
+                <article class="card m-4 p-2 <%= bottle.quantity > 0 ? '' : 'has-text-grey-lighter' %>">
                     <div class="media mb-2">
                         <div class="media-left">
                             <figure class="image is-48x48">
@@ -34,11 +34,11 @@
                         </div>
 
                         <div class="media-content">
-                            <p class="title is-4 mb-5"><%= bottle.label %></p>
-                            <p class="subtitle is-6 mb-2"><%= bottle.appellation.label %></p>
+                            <p class="title is-4 mb-5 <%= bottle.quantity > 0 ? '' : 'has-text-grey-lighter' %>"><%= bottle.label %></p>
+                            <p class="subtitle is-6 mb-2 <%= bottle.quantity > 0 ? '' : 'has-text-grey-lighter' %>"><%= bottle.appellation.label %></p>
                             <div class="is-size-7 is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center">
                                 <p class= "is-italic"><%= bottle.millesime %></p>
-                                <% if (locals.isDrinkable(bottle.millesime, bottle.guard)) { %> 
+                                <% if (locals.isDrinkable(bottle.millesime, bottle.guard) && bottle.quantity > 0) { %> 
                                     <i class="fas fa-wine-bottle" title="A boire"></i>
                                 <% } %>
                                 <p>Quantité : <%= bottle.quantity %></p>

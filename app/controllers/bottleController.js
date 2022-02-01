@@ -264,4 +264,32 @@ module.exports = {
       response.render('error', {message: 'Une erreur est survenue.'})
     }
   },
+
+  buyBottle: async (request, response, next) => {
+    try {
+      if (parseInt(request.body.quantity, 10) < 1) {
+        throw new Error('Quantity must be > 0');
+        
+      } else {
+        const bottleId = request.params.id;
+        const currentBottle = await Bottle.findByPk(bottleId, {
+          include: 'appellation'
+        });
+  
+        if (currentBottle) {
+          const bottleInfo = {
+            quantity: parseInt(currentBottle.quantity, 10) + parseInt(request.body.quantity, 10),
+          }
+          await currentBottle.update(bottleInfo);
+          response.render('bottle', {bottle: currentBottle});
+  
+        } else {
+          response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
+        }
+      }
+    } catch (error) {
+      logger.error(new Error(error))
+      response.render('error', {message: 'Une erreur est survenue.'})
+    }
+  },
 };

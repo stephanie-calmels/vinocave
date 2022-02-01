@@ -27,7 +27,7 @@
 
                 <div class="is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center">
                     <p class= "is-italic is-size-7"><%= guard[bottle.guard] %></p>
-                    <% if (locals.isDrinkable(bottle.millesime, bottle.guard)) { %> 
+                    <% if (locals.isDrinkable(bottle.millesime, bottle.guard) && bottle.quantity > 0) { %> 
                         <i class="fas fa-wine-bottle mr-4" title="A boire"></i>
                     <% } %>
                 </div>
@@ -56,6 +56,10 @@
                     <i class="fas fa-wine-glass-alt"></i>    
                 </a>
             <% } %>
+
+            <a class="card-footer-item has-text-dark js-modal-trigger" title="Stocker des bouteilles" data-target="modal-stock">
+                <i class="fas fa-shopping-cart"></i>
+            </a> 
 
             <a href="/maj-bouteille/<%= bottle.id %>" class="card-footer-item has-text-dark" title="Modifier une bouteille">
                 <i class="fas fa-pencil-alt"></i>
@@ -87,6 +91,32 @@
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="control">
+                                <button class="button is-primary" type="submit">Valider</button>
+                            </div>
+
+                        </form>
+                    </section>
+                </div>
+            </div>
+
+            <div class="modal" id="modal-stock">
+                <div class="modal-background m-10"></div>
+
+                <div class="modal-card m-6 has-text-centered">
+                    <header class="modal-card-head">
+                    <p class="modal-card-title">Stocker des bouteilles</p>
+                    <button class="delete" aria-label="close"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form action="/stock-bouteille/<%= bottle.id %>" method="post">
+                            <div class="field">
+                                <label class="label" for="note">Quantité</label>
+                                <div class="control">
+                                    <input class="input" type="number" id="quantity" name="quantity" placeholder="1" min="1" value="" required>
                                 </div>
                             </div>
 
