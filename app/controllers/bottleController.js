@@ -180,21 +180,26 @@ module.exports = {
 
   noteBottle: async (request, response, next) => {
     try {
-      const bottleId = request.params.id;
-      const currentBottle = await Bottle.findByPk(bottleId, {
-          include: 'appellation'
-        });
-
-      if (currentBottle) {
-        const bottleInfo = {
-          note: request.body.note,
-        }
-    
-        await currentBottle.update(bottleInfo);
-        response.render('bottle', {bottle: currentBottle});
+      if (parseInt(request.body.note, 10) < 0 || parseInt(request.body.note, 10) > 5) {
+        throw new Error('Note must be : 0 < note < 5');
         
       } else {
-        response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
+        const bottleId = request.params.id;
+        const currentBottle = await Bottle.findByPk(bottleId, {
+            include: 'appellation'
+          });
+
+        if (currentBottle) {
+          const bottleInfo = {
+            note: request.body.note,
+          }
+      
+          await currentBottle.update(bottleInfo);
+          response.render('bottle', {bottle: currentBottle});
+          
+        } else {
+          response.status(404).render('404', {message: 'Cette bouteille n\'existe pas.'});
+        }
       }
 
     } catch (error) {
