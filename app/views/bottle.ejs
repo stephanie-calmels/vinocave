@@ -27,7 +27,7 @@
 
                 <div class="is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center">
                     <p class= "is-italic is-size-7"><%= guard[bottle.guard] %></p>
-                    <% if (locals.isDrinkable(bottle.millesime, bottle.guard)) { %> 
+                    <% if (locals.isDrinkable(bottle.millesime, bottle.guard) && bottle.quantity > 0) { %> 
                         <i class="fas fa-wine-bottle mr-4" title="A boire"></i>
                     <% } %>
                 </div>
