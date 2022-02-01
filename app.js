@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const dayjs = require('dayjs');
 
 const router = require('./app/router');
 const { Appellation } = require('./app/models');
@@ -40,6 +41,10 @@ app.use((request, response, next) => {
 
   if(!app.locals.colors) {
     app.locals.colors = colors;
+  }
+
+  if(!app.locals.year) {
+    app.locals.year = dayjs().year();
   }
 
   next();

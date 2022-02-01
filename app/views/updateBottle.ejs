@@ -61,7 +61,7 @@
             <div class="field mr-4">
                 <label class="label" for="millesime">Millésime</label>
                 <div class="control">
-                    <input class="input" type="number"  id="millesime" name="millesime" placeholder="2020" required min="1975" value="<%= bottle.millesime %>">
+                    <input class="input" type="number"  id="millesime" name="millesime" placeholder="2020" required min="1900" max="<%= locals.year %>" value="<%= bottle.millesime %>">
                 </div>
                 <% locals.errors?.find(error => { %>
                     <% if (error.path === 'millesime') { %>
