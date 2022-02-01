@@ -6,6 +6,7 @@ const router = require('./app/router');
 const { Appellation } = require('./app/models');
 const guard = require('./ressources/guard.json');
 const colors = require('./ressources/colors.json');
+const racks = require('./ressources/racks.json');
 const isDrinkable = require('./utils/isDrinkable');
 
 const app = express();
@@ -51,6 +52,11 @@ app.use((request, response, next) => {
   if (!app.locals.isDrinkable) {
     app.locals.isDrinkable = isDrinkable;
   }
+
+  if (!app.locals.racks) {
+    app.locals.racks = racks;
+  }
+
 
   next();
 });

@@ -104,10 +104,10 @@
                 <label class="label" for="rack">Etagère</label>
                 <div class="select">
                     <select id="rack" name="rack">
-                        <option value="<%= bottle.rack %>" selected hidden><%= bottle.rack %></option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
+                        <option value="<%= bottle.rack %>" selected hidden><%= racks[bottle.rack] %></option>
+                        <% for (const rack in racks) { %>
+                            <option value="<%= rack %>"><%= racks[rack] %></option>
+                        <% } %>
                     </select>
                 </div>
             </div>
