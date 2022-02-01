@@ -125,13 +125,13 @@
                 <div class="select">
                     <select id="rack" name="rack">
                         <% if (locals.field?.rack) { %>
-                            <option value="<%= locals.fields.rack %>" selected hidden><%= locals.fields.rack %></option>
+                            <option value="<%= locals.fields.rack %>" selected hidden><%= racks[locals.fields.rack] %></option>
                         <% } else { %>
                             <option selected disabled hidden></option>
                         <% } %>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
+                        <% for (const rack in racks) { %>
+                            <option value="<%= rack %>"><%= racks[rack] %></option>
+                        <% } %>
                     </select>
                 </div>
             </div>
