@@ -17,6 +17,8 @@ router.get('/maj-bouteille/:id', bottleController.modifyBottle);
 router.post('/maj-bouteille/:id', bottleController.updateBottle);
 // sortir une bouteille du stock
 router.get('/boire-bouteille/:id', bottleController.drinkBottle);
+// rentrer des bouteilles dans le stock
+router.post('/stock-bouteille/:id', bottleController.buyBottle);
 // suppression d'une bouteille
 router.get('/suppr-bouteille/:id', bottleController.deleteBottle);
 // attribuer une note à une bouteille
