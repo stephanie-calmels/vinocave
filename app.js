@@ -6,6 +6,7 @@ const router = require('./app/router');
 const { Appellation } = require('./app/models');
 const guard = require('./ressources/guard.json');
 const colors = require('./ressources/colors.json');
+const isDrinkable = require('./utils/isDrinkable');
 
 const app = express();
 
@@ -35,16 +36,20 @@ app.use((request, response, next) => {
     });
   }
   
-  if(!app.locals.guard) {
+  if (!app.locals.guard) {
     app.locals.guard = guard;
   }
 
-  if(!app.locals.colors) {
+  if (!app.locals.colors) {
     app.locals.colors = colors;
   }
 
-  if(!app.locals.year) {
+  if (!app.locals.year) {
     app.locals.year = dayjs().year();
+  }
+
+  if (!app.locals.isDrinkable) {
+    app.locals.isDrinkable = isDrinkable;
   }
 
   next();
