@@ -9,6 +9,14 @@
                 </div>
             </article>
         <% } %>
+        
+        <a href="/nouvelle_bouteille">
+            <article class="card m-4 p-2">
+                <div class="card-content has-text-centered" title="Ajouter une bouteille">
+                    <i class="fas fa-plus-circle is-size-3 has-text-dark"></i>
+                </div>
+            </article>
+        </a>
 
         <% bottles.forEach(bottle => { %>
             <a href="/bouteille/<%=bottle.id%>">

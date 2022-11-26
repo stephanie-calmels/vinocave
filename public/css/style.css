@@ -26,3 +26,7 @@ input:valid:required, select:valid:required {
     left: 0;
     right: 0;
 }
+
+.has-text-grey-lighter img {
+    opacity: 25%;
+}
